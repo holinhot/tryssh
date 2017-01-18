@@ -24,18 +24,31 @@ else:
     print 'file does not exist '
 
 def tryssh(ip,user,password):
-    s = pxssh.pxssh()
-    if not s.login (ip,user,password):
-        print "SSH session failed on login."
-        #print str(s)
+    try:
+        s = pxssh.pxssh()
+        s.prompt(timeout=10)
+        if not s.login (ip,user,password):
+            return ip," SSH session failed on login."
+            #print str(s)
+        else:
+            return ip," SSH session login successful"
+            #s.sendline ('ls -l')
+            #s.prompt()         # match the prompt
+            #print s.before     # print everything before the prompt.
+            s.logout()
+    except:
+        return ip," SSH session failed on login."
     
 
-    else:
-        print "SSH session login successful"
-        #s.sendline ('ls -l')
-        #s.prompt()         # match the prompt
-        #print s.before     # print everything before the prompt.
-        s.logout()
+
+d = open(txt)
+line = d.readline()
+while line:
+    line = line.strip()
+    server = line.split(" ")
+    print tryssh(server[0],server[1],server[2])
+    line = d.readline()
+d.close()
         
     
 
