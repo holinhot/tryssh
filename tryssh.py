@@ -10,8 +10,8 @@ try:
 except IndexError:
     print "Use python testip xxx.txt(server list txt file)"
     os._exit(0)
-	
-	
+
+
 if os.path.exists(txt):
     d = open(txt)
     lines = d.readlines()
@@ -26,9 +26,16 @@ else:
 def tryssh(ip,user,password):
     try:
         s = pxssh.pxssh()
-        s.prompt(timeout=10)
+        #s.prompt(timeout=10)
         if not s.login (ip,user,password):
-            return ip," SSH session failed on login."
+            return ip," SSH session failed on login 100."
+            #print str(s)
+        else:
+            return ip," SSH session login successful"
+        s = pxssh.pxssh()
+        #s.prompt(timeout=10)
+        if not s.login (ip,user,password):
+            return ip," SSH session failed on login 100."
             #print str(s)
         else:
             return ip," SSH session login successful"
@@ -37,8 +44,8 @@ def tryssh(ip,user,password):
             #print s.before     # print everything before the prompt.
             s.logout()
     except:
-        return ip," SSH session failed on login."
-    
+        return ip," SSH session failed on login 101."
+
 
 
 d = open(txt)
@@ -48,10 +55,3 @@ while line:
     server = line.split(" ")
     print tryssh(server[0],server[1],server[2])
     line = d.readline()
-d.close()
-        
-    
-
-
-
-
